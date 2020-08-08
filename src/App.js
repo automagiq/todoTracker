@@ -1,24 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
+import TodoList from './TodoList'
+import TodoController from './TodoController'
 import logo from './logo.svg';
 import './App.css';
 
+
+
+
 function App() {
+
+  const [list, setList] = useState(
+    [
+      { id: 1, title: "Object One", done: false },
+      { id: 2, title: "Object Two", done: false },
+      { id: 3, title: "Object Three", done: false }
+
+    ])
+  const addNewTodo = (newTitle) => {
+    const newTodo = { id: Math.random(), title: newTitle, done: false }
+    const newList = [...list, newTodo]
+    setList(newList)
+  }
+
+  const deleteTodo = (id) => {
+    const newList = [...list].filter(el => el.id !== id)
+    setList(newList)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+
+      <TodoController addNewTodo={addNewTodo} />
+      <TodoList list={list} deleteTodo={deleteTodo} />
+
+
+
     </div>
   );
 }
